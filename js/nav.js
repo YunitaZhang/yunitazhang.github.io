@@ -12,23 +12,20 @@ document.addEventListener("DOMContentLoaded", function() {
 	 
   function loadPage(page) {
 	  var idTeam;
-	  if(page=='jerman'){
-		  idTeam=2002;
-		  getTeamList(idTeam);
-		  console.log('jerman');
-	  }else if(page=='inggris'){
-		  idTeam=2021;
-		  getTeamList(idTeam);
-		  console.log('inggris');
-	  }else{
-		  if(page!='home'){
-		  console.log('else nya masuk');
-		  showAllTeam();
-		  }
-	  }
 	  var xhttp = new XMLHttpRequest();
 	  xhttp.onreadystatechange = function() {
 		if (this.readyState == 4) {
+		  if(page=='jerman'){
+			  idTeam=2002;
+			  getTeamList(idTeam);
+			  console.log('jerman');
+		  }else if(page=='inggris'){
+			  idTeam=2021;
+			  getTeamList(idTeam);
+			  console.log('inggris');
+		  }else if (page =='fave') {
+			  showAllTeam();
+		  }
 		  var content = document.querySelector("#body-content");
 		  if (this.status == 200) {
 			content.innerHTML = xhttp.responseText;
@@ -71,57 +68,5 @@ document.addEventListener("DOMContentLoaded", function() {
     xhttp.send();
   }
   
-  function showAllTeam() {
-	console.log('showall');
-       dbGetAllTeam().then(team => {
-           let listTeamInText = `
-			    <table class="responsive-table">
-					<thead>
-						<tr>
-							<th>Team ID</th>
-							<th>Team Name</th>
-							<th>League Location</th>
-							<th>Email</th>
-							<th>Phone</th>
-							<th>Venue</th>
-							<th>Website</th>
-							<th>Action</th>
-						</tr>
-					</thead>
-					
-					<tbody>
-               `;
-           team.forEach(team => {
-               listTeamInText += `			   
-               <tr>
-                 <td>${team.idTeam}</td>
-                 <td>${team.namaTeam}</td>
-                 <td>${team.lokasi}</td>
-                 <td>${team.email}</td>
-				 <td>${team.phone}</td>
-				 <td>${team.venue}</td>
-				 <td>${team.website}</td>
-                 <td><a class="waves-effect waves-light btn-small modal-trigger removeButton" id="${team.idTeam}" >Delete Favorite</a></td>
-               </tr>
-               `;
-           });
-		   listTeamInText += `			   
-               </tbody>
-				</table>
-               `;
-		   console.log('showall lagi' + listTeamInText);
-           document.getElementById("faveList").innerHTML = listTeamInText;
-
-           let removeButtons = document.querySelectorAll(".removeButton");
-           for(let button of removeButtons) {
-               button.addEventListener("click", function (event) {
-                   let teamId = event.target.id;
-				   console.log(' tim id:'+ teamId)
-                   dbDeleteTeam(teamId).then(() => {
-                       showAllTeam()
-                   })
-               })
-           }
-       })
-    }
+  
 });

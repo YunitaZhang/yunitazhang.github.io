@@ -8,7 +8,8 @@ else
 workbox.precaching.precacheAndRoute([
 	{ url: '/', revision: '1' },
     { url: '/index.html', revision: '1' },
-	{ url: '/icon.png', revision: '1' },
+	{ url: '/icon192.png', revision: '1' },
+	{ url: '/icon512.png', revision: '1' },
     { url: '/nav.html', revision: '1' },
 	{ url: '/teamdetail.html', revision: '1' },
 	{ url: '/manifest.json', revision: '1' },

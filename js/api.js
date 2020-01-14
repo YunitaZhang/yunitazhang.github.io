@@ -87,6 +87,61 @@ function getTeamList(idTeam) {
     })
     .catch(error);
 }
+
+function showAllTeam() {
+	console.log('showall');
+       dbGetAllTeam().then(team => {
+           let listTeamInText = `
+			    <table class="responsive-table">
+					<thead>
+						<tr>
+							<th>Team ID</th>
+							<th>Team Name</th>
+							<th>League Location</th>
+							<th>Email</th>
+							<th>Phone</th>
+							<th>Venue</th>
+							<th>Website</th>
+							<th>Action</th>
+						</tr>
+					</thead>
+					
+					<tbody>
+               `;
+           team.forEach(team => {
+               listTeamInText += `			   
+               <tr>
+                 <td>${team.idTeam}</td>
+                 <td>${team.namaTeam}</td>
+                 <td>${team.lokasi}</td>
+                 <td>${team.email}</td>
+				 <td>${team.phone}</td>
+				 <td>${team.venue}</td>
+				 <td>${team.website}</td>
+                 <td><a class="waves-effect waves-light btn-small modal-trigger removeButton" id="${team.idTeam}" >Delete Favorite</a></td>
+               </tr>
+               `;
+           });
+		   listTeamInText += `			   
+               </tbody>
+				</table>
+               `;
+		   console.log('showall lagi' + listTeamInText);
+           document.getElementById("faveList").innerHTML = listTeamInText;
+
+           let removeButtons = document.querySelectorAll(".removeButton");
+           for(let button of removeButtons) {
+               button.addEventListener("click", function (event) {
+                   let teamId = event.target.id;
+				   console.log(' tim id:'+ teamId)
+                   dbDeleteTeam(teamId).then(() => {
+                       showAllTeam()
+                   })
+               })
+           }
+       })
+    }
+	
 function getTeamById() {
   // Ambil nilai query parameter (?id=)
   var urlParams = new URLSearchParams(window.location.search);
