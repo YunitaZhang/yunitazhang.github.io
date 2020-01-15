@@ -25,7 +25,7 @@ workbox.precaching.precacheAndRoute([
 	{ url: '/js/nav.js', revision: '1' }], { 
         ignoreURLParametersMatching: [/.*/]
     }
-]);
+);
 
 workbox.routing.registerRoute(
   new RegExp('https://api.football-data.org/v2/'),
