@@ -27,12 +27,11 @@ const dbInsertTeam = dataTeam => {
 			//var save = document.getElementById("saveFave");
 			//save.style.display = "none";
 			//document.querySelector('#ShowButton').value = 'Hide';
-			document.querySelector('#faveButton').innerText = "Delete Favorite";
-			console.log("data save!");
-			
             return transaction;
         }).then(transaction => {
             if (transaction.complete) {
+				document.querySelector('#faveButton').innerText = "Delete Favorite";
+				console.log("data save!");
 				window.Materialize.toast('Data Saved!', 2000);
                 resolve(true)
             } else {
@@ -47,12 +46,11 @@ const dbDeleteTeam = idTeam => {
         idbPromised.then(db => {
             const transaction = db.transaction("team", `readwrite`);
             transaction.objectStore("team").delete(idTeam);
-			document.querySelector('#faveButton').innerText = "Save Favorite";
-			console.log("data delete!");
-			
             return transaction;
         }).then(transaction => {
             if (transaction.complete) {
+				document.querySelector('#faveButton').innerText = "Save Favorite";
+				console.log("data delete!");
 				window.Materialize.toast('Data Deleted!', 2000);
                 resolve(true)
             } else {

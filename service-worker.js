@@ -22,13 +22,24 @@ workbox.precaching.precacheAndRoute([
 	{ url: '/js/dbQuery.js', revision: '1' },
 	{ url: '/js/idb.js', revision: '1' },
 	{ url: '/js/materialize.js', revision: '1' },
-	{ url: '/js/nav.js', revision: '1' },
-	{ ignoreURLParametersMatching: [/.*/]}
+	{ url: '/js/nav.js', revision: '1' }], { 
+        ignoreURLParametersMatching: [/.*/]
+    }
 ]);
 
 workbox.routing.registerRoute(
   new RegExp('https://api.football-data.org/v2/'),
+  workbox.strategies.staleWhileRevalidate({
+    })
+);
+
+workbox.routing.registerRoute(
   new RegExp('https://fonts.googleapis.com/icon?family=Material+Icons'),
+  workbox.strategies.staleWhileRevalidate({
+    })
+);
+
+workbox.routing.registerRoute(
   new RegExp('//cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js'),
   workbox.strategies.staleWhileRevalidate({
     })
